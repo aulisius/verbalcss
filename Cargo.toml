@@ -1,0 +1,6 @@
+[package]
+name = "verbalcss"
+version = "0.1.0"
+authors = ["Faizaan <aulisius7@gmail.com>"]
+
+[dependencies]
