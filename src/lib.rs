@@ -34,7 +34,7 @@ impl VerbalCSS {
         }
     }
 
-    fn new_elem(mut self, elem: String) -> Self {
+    fn new_elem(&mut self, elem: String) -> &mut Self {
         self.curr_elem = Some(CSSElement {
             name: elem,
             properties: HashMap::new(),
@@ -42,7 +42,7 @@ impl VerbalCSS {
         self
     }
 
-    fn with_color(mut self, color: Color) -> Self {
+    fn with_color(&mut self, color: Color) -> &mut Self {
 
         let color_str = match color {
             Color::Hex(s) => format!("#{}", s),
@@ -61,7 +61,7 @@ impl VerbalCSS {
         self
     }
 
-    fn make(mut self) -> String {
+    fn make(&mut self) -> String {
         if let Some(ref mut elem) = self.curr_elem {
             let mut tmp = String::new();
 
@@ -69,7 +69,7 @@ impl VerbalCSS {
                 tmp.push_str(&format!("{}:{};\n", k, v));
             }
 
-            format!("{} {{ {} }}", elem.name, tmp)
+            format!("{} {{ \n {} }}", elem.name, tmp)
         } else {
             println!("No element to make! Make an element first!");
             String::new()
@@ -83,5 +83,11 @@ fn main() {
     println!("{:?}",
              verbal_css.new_elem("li".to_string())
                        .with_color(Color::Hex("fff".to_string()))
+                       .make());
+
+
+    println!("{:?}",
+             verbal_css.new_elem("h1".to_string())
+                       .with_color(Color::Hex("f00".to_string()))
                        .make());
 }
